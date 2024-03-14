@@ -27,5 +27,4 @@ const makeConnection = async () => {
     }
   }
 
-  makeConnection()
   module.exports = { makeConnection, closeConnection }
