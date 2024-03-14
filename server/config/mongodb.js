@@ -26,5 +26,6 @@ const makeConnection = async () => {
       console.log('error closing connection: ', error)
     }
   }
+
   makeConnection()
   module.exports = { makeConnection, closeConnection }
