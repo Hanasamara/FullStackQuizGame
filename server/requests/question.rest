@@ -1,0 +1,26 @@
+GET http://localhost:3001/api/question/about
+
+###
+GET http://localhost:3001/api/question/
+
+###
+Get http://localhost:3001/api/question/65f3fc0243f062fb31761e6e
+
+###
+POST  http://localhost:3001/api/question/65f401c31fed82d9965be76c
+Content-Type: application/json
+
+{
+  "questionName": "What is the chemical symbol for water?",
+  "options": ["O2", "H2O", "CO2", "N2"],
+  "correct_answer": "H2O",
+  "points": 10
+}
+
+###
+DELETE http://localhost:3001/api/question/65f401fe1fed82d9965be76f
+Content-Type: application/json
+
+{
+  "quizId": "65f401c31fed82d9965be76c"
+}

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 // Question schema
 const questionSchema = new mongoose.Schema({
-  question: String,
+  questionName: String,
   options: [
     {
         type: String

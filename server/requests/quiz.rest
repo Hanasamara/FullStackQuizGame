@@ -1,0 +1,16 @@
+GET http://localhost:3001/api/quizes/about
+
+###
+GET http://localhost:3001/api/quizes
+
+###
+POST  http://localhost:3001/api/quizes/
+Content-Type: application/json
+
+{
+    "name": "Science Quiz"
+}
+
+###
+DELETE http://localhost:3001/api/quizes/65f400aa1fed82d9965be765
+
