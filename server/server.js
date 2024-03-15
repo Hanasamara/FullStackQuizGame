@@ -16,7 +16,7 @@ const app = express()                       // Creates an express server in app
  */
 const morgan = require('morgan')
 // const loginRouter = require('./routers/login')
-// const personRouter = require('./routers/people')
+const personRouter = require('./routers/people')
 const quizRouter = require('./routers/quiz')
 const questionRouter = require('./routers/question')
 
@@ -34,7 +34,7 @@ app.use(express.json())
  */
 app.use(morgan('dev'))
 // app.use('/api/login', loginRouter)
-// app.use('/api/people', personRouter)
+app.use('/api/people', personRouter)
 app.use('/api/quizes', quizRouter)
 app.use('/api/question', questionRouter)
 
