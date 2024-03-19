@@ -4,13 +4,21 @@ GET http://localhost:3001/api/quizes/about
 GET http://localhost:3001/api/quizes
 
 ###
-POST  http://localhost:3001/api/quizes/
+GET http://localhost:3001/api/quizes/65f7e8311e5b4a90c9cce365
+
+###
+POST  http://localhost:3001/api/quizes/65f7e7d31e5b4a90c9cce35c
 Content-Type: application/json
 
 {
-    "name": "Science Quiz"
+    "name": "Math Quiz"
 }
 
 ###
 DELETE http://localhost:3001/api/quizes/65f400aa1fed82d9965be765
+Content-Type: application/json
+
+{
+    "userId": "65f7e7d31e5b4a90c9cce35c"
+}
 

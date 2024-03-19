@@ -15,10 +15,12 @@ loginRouter.post('/', async (request, response) => {
   // Get fields
   const { name, password } = request.body
   // Get user
-  const person = await Person.findOne({ name })
+  const person = await Person.findOne({ name }).populate('quizes')
+  console.log(person)
   if (person == null) {
+    console.log(person)
     return response.status(401).json({
-      error: 'invalid username'
+      error: 'username not found'
     })
   }
 

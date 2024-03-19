@@ -34,7 +34,16 @@ peopleRouter.get('/', async (request, response) => {
  */
 peopleRouter.get('/:id', async (request, response) => {
   const id = request.params.id
-  const person = await Person.findById(id)
+  const person = await Person.findById(id).populate({
+    path: 'quizes',
+    populate: { path: 'questions' } // Populate questions within quizzes
+  });
+   // Check if person exists
+   if (!person) {
+    return response.status(404).send({
+      error: 'person not found'
+    });
+  }
   response.json(person)
 })
 
@@ -76,8 +85,19 @@ peopleRouter.post('/', async (request, response) => {
  */
 peopleRouter.delete('/:id', async (request, response) => {
   const id = request.params.id
+  // Get person by id
+  const person = await Person.findById(id);
+
+  // Check if person exists
+  if (!person) {
+    return response.status(404).send({
+      error: 'person not found'
+    });
+  }
+
   // Get Quizes to delete
   const quizIds = (await Person.findById(id)).quizes.map(id => id.toJSON())
+  
   // Get Questions to delete
   const quizes = await Promise.all(quizIds.map(id => Quiz.findById(id)))
   const questions = quizes.map(quiz => quiz.questions)

@@ -7,11 +7,11 @@ GET http://localhost:3001/api/question/
 Get http://localhost:3001/api/question/65f3fc0243f062fb31761e6e
 
 ###
-POST  http://localhost:3001/api/question/65f401c31fed82d9965be76c
+POST  http://localhost:3001/api/question/65f7e8311e5b4a90c9cce365
 Content-Type: application/json
 
 {
-  "questionName": "What is the chemical symbol for water?",
+  "questionName": "Q3",
   "options": ["O2", "H2O", "CO2", "N2"],
   "correct_answer": "H2O",
   "points": 10

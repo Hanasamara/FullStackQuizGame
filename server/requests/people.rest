@@ -1,0 +1,21 @@
+GET  http://localhost:3001/api/people/about
+
+###
+GET http://localhost:3001/api/people
+
+###
+GET http://localhost:3001/api/people/65f7e7d31e5b4a90c9cce35c
+
+###
+POST  http://localhost:3001/api/people
+Content-Type: application/json
+
+{
+    "name": "Zaid",
+    "password": "123"
+}
+
+###
+DELETE http://localhost:3001/api/people/65f41d8516fdfb19ede88989
+
+

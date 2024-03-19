@@ -4,7 +4,7 @@ const quizRouter = express.Router()
 /**
  * Import mongoose models
  */
-// const Person = require('../models/person')
+const Person = require('../models/person')
 const Quiz = require('../models/quiz')
 const Question = require('../models/question')
 
@@ -33,7 +33,7 @@ quizRouter.get('/', async (request, response) => {
  */
 quizRouter.get('/:id', async (request, response) => {
   const id = request.params.id
-  const quiz = await Quiz.findById(id)
+  const quiz = await Quiz.findById(id).populate('questions')
   response.json(quiz)
 })
 
@@ -42,34 +42,34 @@ quizRouter.get('/:id', async (request, response) => {
  * Note: The :id required is the id of the PERSON the quiz should belong to
  * @returns the newly created Quiz
  */
-quizRouter.post('/', async (request, response) => {
+quizRouter.post('/:id', async (request, response) => {
   // Get fields
-//   const personId = request.params.id
+  const personId = request.params.id
   const { name } = request.body
   const highest_score = 0
   console.log(name,highest_score)
   // Error handling
-  if (!name) {
+  if (name == undefined) {
     return response.status(400).send({
       error: 'missing content in body'
     })
   }
-//   const user = await Person.findById(personId)
-//   if (!user) {
-//     return response.status(400).send({
-//       error: 'no such user exists to add the basket to'
-//     })
-//   }
+  const user = await Person.findById(personId)
+  if (!user) {
+    return response.status(400).send({
+      error: 'no such user exists to add the quiz to'
+    })
+  }
   // Create new Quiz and save it
   const quiz = new Quiz({
     name,
     highest_score
   })
   const savedQuiz = await quiz.save()
-  // Add the basket to the user
-//   user.baskets = user.baskets.concat(savedBasket._id)
-//   await user.save()
-  // Return the saved basket
+  // Add the quiz to the user
+  user.quizes = user.quizes.concat(savedQuiz._id)
+  await user.save()
+  // Return the saved quiz
   response.status(201).send(savedQuiz)
 })
 
@@ -82,16 +82,23 @@ quizRouter.post('/', async (request, response) => {
 quizRouter.delete('/:id', async (request, response) => {
   // Get fields
   const quizId = request.params.id
-//   const { personId } = request.body
+  const { personId } = request.body
 
-//   // Check if the person exists
-//   const person = await Person.findById(personId)
-//   if (!person) {
-//     return response.status(400).send({
-//       error: 'no such person exists to remove the basket from'
-//     })
-//   }
+  if (!personId) {
+    return response.status(400).send({
+      error: 'personId not define'
+    })
+  }
 
+  // Check if the person exists
+  const person = await Person.findById(personId)
+  if (!person) {
+    return response.status(400).send({
+      error: 'no such person exists to remove the quiz from'
+    })
+  }
+
+  // remove questions the remove quizes
   // Get the questions we need to remove and remove them
   const questionIds = (await Quiz.findById(quizId)).questions.map(id => id.toJSON())
   // will handle all promises requests
@@ -99,8 +106,8 @@ quizRouter.delete('/:id', async (request, response) => {
 
   // Remove the Quiz on its own and from the user
   await Quiz.findByIdAndDelete(quizId)
-//   person.baskets = person.baskets.filter(id => id.toJSON() !== basketId)
-//   await person.save()
+  person.quizes = person.quizes.filter(id => id.toJSON() !== quizId)
+  await person.save()
   response.status(200).send()
 })
 
