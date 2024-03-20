@@ -4,15 +4,19 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import AddQuestionForm from "./AddQuestionForm";
 import EditQuestionForm from './EditQuestionForm';
+import questionsServices from '../services/question'
 
 
 function EditQuiz({quiz , onReturnToList, onDeleteQuestion, onAddQuestion, onUpdateQuiz }) {
   const [questions, setQuestions] = useState(quiz.questions);
   const [editingQuestionId, setEditingQuestionId] = useState(null);
 
+  
   const handleDelete = (questionId) => {
     const updatedQuestions = questions.filter(question =>  question.id !== questionId);
     setQuestions(updatedQuestions);
+    console.log(quiz.id,questionId)
+    questionsServices.deleteQuestion(quiz.id,questionId);
 
     // Update the quiz in the state with the updated questions
     const updatedQuiz = { ...quiz, questions: updatedQuestions };
@@ -31,6 +35,15 @@ function EditQuiz({quiz , onReturnToList, onDeleteQuestion, onAddQuestion, onUpd
       return question;
     });
     setQuestions(updatedQuestions);
+
+    console.log(editedQuestion)
+
+
+    const requestBody = {
+      quizId: quiz.id,
+      updatedQuestionData:editedQuestion
+    };
+    questionsServices.updateQuestion(editedQuestion.id,requestBody)
     setEditingQuestionId(null); 
 
     // Update the quiz in the state with the updated questions
@@ -41,12 +54,13 @@ function EditQuiz({quiz , onReturnToList, onDeleteQuestion, onAddQuestion, onUpd
   const handleAddQuestion = (newQuestion) => {
     newQuestion.id = uuidv4();
     setQuestions([...questions, newQuestion]);
+    questionsServices.addQuestion(quiz.id,newQuestion)
     onAddQuestion(quiz.id, newQuestion);
   };
 
   return (
     <div className='editquizdiv'>
-      <h1>Edit {quiz.name} Quiz</h1>
+      <h1>Edit {quiz.name}</h1>
       {questions.map((question, index) => (
         <div key={question.id} className='questionseditdiv'>
           {editingQuestionId === question.id ? (
@@ -58,7 +72,7 @@ function EditQuiz({quiz , onReturnToList, onDeleteQuestion, onAddQuestion, onUpd
           ) : (
             <div>
               <div className='questionsedittitle'>
-                <p>{index+1}. {question.question}</p>
+                <p>{index+1}. {question.questionName}</p>
                 <div className='questionsediticons'>
                   <FaEdit className='delicon' onClick={() => handleEdit(question.id)} />
                   <RiDeleteBin6Line className='edicon' onClick={() => handleDelete(question.id)} />

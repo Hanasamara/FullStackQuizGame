@@ -55,7 +55,7 @@ function PlayQuiz({ quiz, onReturnToList ,onUpdateHighestScore}) {
           {/* I will use question index to handle answer for each question */}
           {quiz.questions.map((question,indexQ) => (
             <div className='question' key={question.id}>
-              <p>{indexQ+1}. {question.question}</p>
+              <p>{indexQ+1}. {question.questionName}</p>
               <ul className="options" key={question.id}>
                 {question.options.map((option,index) => (
                   <li className='option' key={index}>

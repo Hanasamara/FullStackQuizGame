@@ -3,7 +3,7 @@ import Option from './Option';
 
 function AddQuestionForm({ onAddQuestion }) {
   const [newQuestion, setNewQuestion] = useState({
-    question: '',
+    questionName: '',
     options: [''],
     correct_answer: '',
     points: 1,
@@ -47,7 +47,7 @@ function AddQuestionForm({ onAddQuestion }) {
   const handleAddQuestion = () => {
     // Validation: Check if any field is empty
     if (
-        newQuestion.question.trim() === '' ||
+        newQuestion.questionName.trim() === '' ||
         newQuestion.options.some(option => option.trim() === '') ||
         newQuestion.correct_answer.trim() === ''
       ) {
@@ -57,7 +57,7 @@ function AddQuestionForm({ onAddQuestion }) {
       
     onAddQuestion(newQuestion);
     setNewQuestion({
-      question: '',
+      questionName: '',
       options: [''],
       correct_answer: '',
       points: 1,
@@ -71,8 +71,8 @@ function AddQuestionForm({ onAddQuestion }) {
         Question:
         <input
           type="text"
-          name='question'
-          value={newQuestion.question}
+          name='questionName'
+          value={newQuestion.questionName}
           onChange={handleNewQuestionChange}
         />
       </label >

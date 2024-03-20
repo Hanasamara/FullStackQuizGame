@@ -7,24 +7,42 @@ import QuizList from './QuizList';
 import CreateQuiz from './CreateQuiz';
 import EditQuiz from './EditQuiz'
 import PlayQuiz from './PlayQuiz';
-import fetchData from '../services/QuizzesService';
+import QuizServices from '../services/QuizzesService';
+import personServices from '../services/person';
+import browserServices from '../services/browser';
+import { setPerson, logoutPerson, storeCookie, getCookie } from '../reducers/personReducer'
+
 
 
 function Game() {
 
   const [action, setAction] = useState(null);
-  // const [quizzes, setQuizzes] = useState([]);
+  const currentUser = useSelector(state => state.person);
   const quizzes = useSelector(state => state.quizzes);
-  // const [selectedQuiz, setSelectedQuiz] = useState(null);
   const selectedQuiz = useSelector(state => state.selectedQuiz);
   const dispatch = useDispatch();
 
-  // const path = '/data/quiz.json'
-
   useEffect(() => {
-    dispatch(setQuizzes(quizzesJson));
-    dispatch(clearSelectedQuiz());
-  }, [dispatch]); 
+    dispatch(getCookie())
+  }, [])
+//performed once user login
+  useEffect(() => {
+    if(currentUser)
+    {
+      personServices.getPerson(currentUser.id)
+        .then(data => {
+          const userQuizzes = data.quizes; 
+          dispatch(setQuizzes(userQuizzes));
+          dispatch(clearSelectedQuiz());
+        })
+        .catch(error => {
+          console.error('Error fetching quizzes:', error);
+        });
+      }
+    
+  }, [currentUser,dispatch]);
+
+  console.log(quizzes)
 
   const handleDeleteQuiz = (e,quizid) => {
     e.preventDefault()
@@ -33,6 +51,9 @@ function Game() {
     // const newQuizlist = quizzes.filter(quiz => quiz.id !== quizid)
     // setQuizzes(newQuizlist);
     dispatch(deleteQuiz(quizid));
+    QuizServices.deleteQuizzes(currentUser.id,quizid);
+    
+
   };
 
   const handlePlayQuiz = (e,quizid) => {
@@ -59,13 +80,18 @@ function Game() {
       return quiz;
     });
 
+    console.log(updatedQuizzes);
     dispatch(setQuizzes(updatedQuizzes));
+
+    const updatedQuizData = { highest_score: newHighestScore };
+    QuizServices.editQuiz(quizId,updatedQuizData);
 
     const selectedQuizData = {
       quizzes: updatedQuizzes,
       quizId: quizId
     };
     dispatch(setSelectedQuiz(selectedQuizData));
+
   };
 
   const handleEditQuiz = (e,quizid) => {
@@ -89,6 +115,8 @@ function Game() {
   const handelDeletedQuestion = (updatedQuiz) => {
     // const updatedQuizzes = quizzes.map(quiz => (quiz.id === updatedQuiz.id ? updatedQuiz : quiz));
     dispatch(updateQuiz(updatedQuiz));
+    // QuizServices.
+
     
   };
 
@@ -116,6 +144,7 @@ function Game() {
   const handleCreateQuiz = (newQuiz) => {
     console.log(newQuiz)
     dispatch(addQuiz(newQuiz));
+    QuizServices.addQuiz(currentUser.id,newQuiz);
     
     // const newQuizlist = [...quizzes, newQuiz].find(quiz => quiz.id === newQuiz.id)
     // console.log(newQuizlist);

@@ -72,7 +72,7 @@ function CreateQuiz({onCreateQuiz}) {
         />
         </label>
         <button onClick={handleCreateQuiz}>Create</button>
-        <button onClick={handleLoadQuiz} >LoadQuiz</button>
+        {/* <button onClick={handleLoadQuiz} >LoadQuiz</button> */}
       </div>
     </div>
   );

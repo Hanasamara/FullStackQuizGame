@@ -12,9 +12,11 @@ import { Provider } from 'react-redux'
 /**
  * Importing reducers
  */
-import testReducer from './reducers/testReducer.js'
+
 import quizReducer from './reducers/quizReducer.js'
 import selectedQuizReducer from './reducers/selectedQuizReducer.js'
+import personReducer from './reducers/personReducer.js'
+
 
 
 /**
@@ -22,6 +24,7 @@ import selectedQuizReducer from './reducers/selectedQuizReducer.js'
  */
 const store = configureStore({
   reducer: {
+    person: personReducer,
     quizzes: quizReducer,
     selectedQuiz: selectedQuizReducer,
   }

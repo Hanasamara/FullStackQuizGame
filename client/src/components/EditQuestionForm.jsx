@@ -31,8 +31,8 @@ function EditQuestionForm({ questionData, onSave }) {
         <input
             className="question-input"
             type="text"
-            name="question"
-            value={editedQuestion.question}
+            name="questionName"
+            value={editedQuestion.questionName}
             onChange={handleChange}
         />
         </div>

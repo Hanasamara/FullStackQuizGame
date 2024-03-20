@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import quizzesJson from '/data/quiz.json';
 
-const initialState = quizzesJson;
+const initialState = [];
 
 const quizSlice = createSlice({
   name: 'quizzes',
