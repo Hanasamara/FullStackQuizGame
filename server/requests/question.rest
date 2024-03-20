@@ -11,16 +11,30 @@ POST  http://localhost:3001/api/question/65f7e8311e5b4a90c9cce365
 Content-Type: application/json
 
 {
-  "questionName": "Q3",
+  "questionName": "Q7",
   "options": ["O2", "H2O", "CO2", "N2"],
   "correct_answer": "H2O",
   "points": 10
 }
 
 ###
-DELETE http://localhost:3001/api/question/65f401fe1fed82d9965be76f
+DELETE http://localhost:3001/api/question/65f7e8f4327ad3a206af8d5b
 Content-Type: application/json
 
 {
-  "quizId": "65f401c31fed82d9965be76c"
+  "quizId": "65f7e8311e5b4a90c9cce365"
+}
+
+###
+PUT http://localhost:3001/api/question/65f7e8eb327ad3a206af8d57
+Content-Type: application/json
+
+{
+  "quizId": "65f7e8311e5b4a90c9cce365",
+  "updatedQuestionData": {
+    "name": "Updated question name",
+    "options": ["Updated option 0", "Updated option 2", "Updated option 3", "Updated option 4"],
+    "point": "5",
+    "correctAnswer": "Updated correct answer"
+  }
 }

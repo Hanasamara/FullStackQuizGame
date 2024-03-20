@@ -111,4 +111,52 @@ quizRouter.delete('/:id', async (request, response) => {
   response.status(200).send()
 })
 
+/**
+ * @receives a PUT request to the URL: http://localhost:3001/api/quiz:id
+ * Note: The :id required is the id of the PERSON the quiz should belong to
+ * @returns the newly created Quiz
+ */
+quizRouter.put('/:id', async (request, response) => {
+  try {
+    // Get quiz ID from request parameters
+    const quizId = request.params.id;
+    
+    // Get new highest score from request body
+    const { highest_score } = request.body;
+
+    // Error handling
+    if (highest_score === undefined) {
+      return response.status(400).send({
+        error: 'missing content in body'
+      });
+    }
+
+    // Find the quiz by ID
+    const quiz = await Quiz.findById(quizId);
+
+    // Check if the quiz exists
+    if (!quiz) {
+      return response.status(404).send({
+        error: 'quiz not found'
+      });
+    }
+
+    // Update the highest score of the quiz
+    quiz.highest_score = highest_score;
+
+    // Save the updated quiz
+    const updatedQuiz = await quiz.save();
+
+    // Return the updated quiz
+    response.status(200).send(updatedQuiz);
+  } catch (error) {
+    console.error('Error updating quiz:', error);
+    response.status(500).send({
+      error: 'Internal server error'
+    });
+  }
+});
+
+
+
 module.exports = quizRouter

@@ -96,4 +96,44 @@ questionRouter.delete('/:id', async (request, response) => {
   response.status(204).send()
 })
 
+/**
+ * @receives a PUT request to the URL: http://localhost:3001/api/question/:id
+ * Note: The :id required is the id of the Question we want to delete
+ * You should pass the Quiz id in the request body
+ * @returns an appropriate status code
+ */
+questionRouter.put('/:id', async (request, response) => {
+  try {
+    // Get fields
+    const questionId = request.params.id;
+    const { quizId, updatedQuestionData } = request.body;
+
+    // Check if the quiz exists
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) {
+      return response.status(400).send({
+        error: 'No such quiz exists to update the question in'
+      });
+    }
+
+    // Update the question
+    const updatedQuestion = await Question.findByIdAndUpdate(questionId, updatedQuestionData, { new: true });
+
+    if (!updatedQuestion) {
+      return response.status(404).send({
+        error: 'Question not found'
+      });
+    }
+
+    response.status(200).send(updatedQuestion);
+  } catch (error) {
+    console.error('Error updating question:', error);
+    response.status(500).send({
+      error: 'Internal server error'
+    });
+  }
+});
+
+
+
 module.exports = questionRouter

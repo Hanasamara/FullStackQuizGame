@@ -22,3 +22,11 @@ Content-Type: application/json
     "userId": "65f7e7d31e5b4a90c9cce35c"
 }
 
+###
+PUT http://localhost:3001/api/quizes/65f7e8311e5b4a90c9cce365
+Content-Type: application/json
+
+{
+  "highest_score": 0
+}
+
