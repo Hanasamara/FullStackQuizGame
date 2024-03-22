@@ -16,7 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-              # Install the dotenv package
 
       - name: Setup Node environment
         uses: actions/setup-node@v4
