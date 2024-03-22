@@ -1,1 +1,44 @@
+name: Production_Deployment_Pipeline
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_to_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node environment
+        uses: actions/setup-node@v4
+        # with:
+        #   node-version: 14
+
+      - name: Install dependencies for server
+        working-directory: ./server
+        run: npm install
+
+      - name: Run backend tests
+        working-directory: ./server
+        run: npm testserver
+
+      - name: Install dependencies for client
+        working-directory: ./client
+        run: npm install
+
+      - name: Run frontend tests
+        working-directory: ./client
+        run: npm test
+      #   timeout-minutes: 1
+
+    #   - name: Run server deploy hook
+    #     working-directory: ./server
+    #     run: curl ${{ secrets.SERVER_DEPLOYMENT_HOOK }}
+
+    #   - name: Run client deploy hook
+    #     working-directory: ./client
+    #     run: curl ${{ secrets.CLIENT_DEPLOYMENT_HOOK }}
