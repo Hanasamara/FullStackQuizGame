@@ -8,6 +8,10 @@ on:
 jobs:
   deploy_to_pipeline:
     runs-on: ubuntu-latest
+    env:
+        BASIC_URL: mongodb+srv://hsamara:Sam8686==@cluster123.nzzy7o4.mongodb.net/QuizGame?retryWrites=true&w=majority
+        TEST_URL: mongodb+srv://hsamara:Sam8686==@cluster123.nzzy7o4.mongodb.net/QuizGame_Test?retryWrites=true&w=majority
+        PORT: 3001
 
     steps:
       - name: Checkout code
