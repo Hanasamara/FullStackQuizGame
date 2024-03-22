@@ -8,27 +8,15 @@ on:
 jobs:
   deploy_to_pipeline:
     runs-on: ubuntu-latest
+    env:
+      BASIC_URL: ${{ secrets.BASIC_URL }}
+      TEST_URL: ${{ secrets.TEST_URL }}
+      PORT : ${{ secrets.PORT }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
               # Install the dotenv package
-              
-      - name: Install dotenv package
-        run: npm install dotenv
-
-      # Print out the contents of the .env file
-      - name: Debug .env file contents
-        run: cat .env
-
-      # Load environment variables from .env file
-      - name: Load environment variables from .env file
-        run: |
-          source .env
-
-      # Print out the environment variables after loading
-      - name: Debug loaded environment variables
-        run: env
 
       - name: Setup Node environment
         uses: actions/setup-node@v4
