@@ -27,13 +27,13 @@ function PlayQuiz({ quiz, onReturnToList ,onUpdateHighestScore}) {
       let total = 0;
       selectedAnswers.forEach((selectedAnswer, index) => {
         if (selectedAnswer === quiz.questions[index].correct_answer) {
-          total += quiz.questions[index].points;
+          total += Number(quiz.questions[index].points);
         }
       });
 
       setCurrentScore(total);
 
-      if (total > quiz.highest_score){
+      if (total > Number(quiz.highest_score)){
         onUpdateHighestScore(quizId,total);
 
       }

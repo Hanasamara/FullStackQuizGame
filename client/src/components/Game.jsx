@@ -11,6 +11,7 @@ import QuizServices from '../services/QuizzesService';
 import personServices from '../services/person';
 import browserServices from '../services/browser';
 import { setPerson, logoutPerson, storeCookie, getCookie } from '../reducers/personReducer'
+import QuizzesService from '../services/QuizzesService';
 
 
 
@@ -141,20 +142,20 @@ function Game() {
   };
 
 
-  const handleCreateQuiz = (newQuiz) => {
+  const handleCreateQuiz = async (newQuiz) => {
     console.log(newQuiz)
-    dispatch(addQuiz(newQuiz));
-    QuizServices.addQuiz(currentUser.id,newQuiz);
     
-    // const newQuizlist = [...quizzes, newQuiz].find(quiz => quiz.id === newQuiz.id)
-    // console.log(newQuizlist);
+    const addedQuiz = await QuizServices.addQuiz(currentUser.id,newQuiz);
+    dispatch(addQuiz(addedQuiz));
+    const newQuizlist = [...quizzes, addedQuiz]
+    console.log(newQuizlist);
 
     const selectedQuizData = {
-      quizzes: [...quizzes, newQuiz],
-      quizId: newQuiz.id
+      quizzes: newQuizlist,
+      quizId: addedQuiz.id
     };
     dispatch(setSelectedQuiz(selectedQuizData));
-    
+   
     setAction('edit');
   };
 

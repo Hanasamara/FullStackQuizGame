@@ -41,15 +41,17 @@ app.use('/api/question', questionRouter)
 /**
  * Connect to database, start server & listen to server
  */
-const startServer = async () => {
-  await db.makeConnection()
-  return app.listen(process.env.PORT, () => {
+const server = async () => {
+    await db.makeConnection()
+    return app.listen(process.env.PORT, () => {
     console.log(`Server running on PORT: ${process.env.PORT}`)
   })
-}
-
+  }
+  
 // Start the server if not in a testing environment
 if (process.env.NODE_ENV !== 'test') {
-  startServer();
+  server();
 }
+
+
 module.exports = app; 

@@ -2,7 +2,7 @@ import axios from 'axios'
 const baseURL = '/api/quizes'
 
 const getQuizzes = () => {
-  const request = axios.get()
+  const request = axios.get(`${baseURL}`)
   return request.then(response => {
     return response.data;
   })
