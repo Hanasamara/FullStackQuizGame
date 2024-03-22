@@ -8,14 +8,25 @@ on:
 jobs:
   deploy_to_pipeline:
     runs-on: ubuntu-latest
-    env:
-        BASIC_URL: ${{ variables.BASIC_URL }}
-        TEST_URL: ${{ variables.TEST_URL }}
-        PORT: 3001
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+              # Install the dotenv package
+              
+      - name: Install dotenv package
+        run: npm install dotenv
+
+      # Load environment variables from .env file
+      - name: Load environment variables from .env file
+        run: |
+          source .env
+
+      # Use environment variables in workflow
+      - name: Use environment variables
+        run: |
+          echo "BASIC_URL: $BASIC_URL"
+          echo "TEST_URL: $TEST_URL"
 
       - name: Setup Node environment
         uses: actions/setup-node@v4
