@@ -5,8 +5,8 @@ const getURL = () => {
     switch (process.env.NODE_ENV) {
       case 'basic':
         return process.env.BASIC_URL
-      case 'user':
-        return process.env.USER_URL
+      case 'test':
+        return process.env.TEST_URL
       default:
         break
     }
