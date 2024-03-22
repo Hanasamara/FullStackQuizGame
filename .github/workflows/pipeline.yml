@@ -19,8 +19,7 @@ jobs:
 
       # Load environment variables from .env file
       - name: Load environment variables from .env file
-        run: |
-          source .env
+        run: .env
 
       # Use environment variables in workflow
       - name: Use environment variables
