@@ -39,10 +39,10 @@ jobs:
         run: npm test
       #   timeout-minutes: 1
 
-    #   - name: Run server deploy hook
-    #     working-directory: ./server
-    #     run: curl ${{ secrets.SERVER_DEPLOYMENT_HOOK }}
+      - name: Run server deploy hook
+        working-directory: ./server
+        run: curl ${{ secrets.SERVER_DEPLOYMENT_HOOK }}
 
-    #   - name: Run client deploy hook
-    #     working-directory: ./client
-    #     run: curl ${{ secrets.CLIENT_DEPLOYMENT_HOOK }}
+      - name: Run client deploy hook
+        working-directory: ./client
+        run: curl ${{ secrets.CLIENT_DEPLOYMENT_HOOK }}
