@@ -8,6 +8,10 @@ on:
 jobs:
   deploy_to_pipeline:
     runs-on: ubuntu-latest
+    env:
+      BASIC_URL: ${{ secrets.BASIC_URL }}
+      TEST_URL: ${{ secrets.TEST_URL }}
+      PORT : ${{ secrets.PORT }}
 
     steps:
       - name: Checkout code
