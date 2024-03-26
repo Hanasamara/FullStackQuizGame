@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function PlayQuiz({ quiz, onReturnToList ,onUpdateHighestScore}) {
   const [showResults, setShowResults] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState(new Array(quiz.questions.length).fill(null));
 
   console.log(quiz);
   const handleAnswerSelect = (index,answer) => {
